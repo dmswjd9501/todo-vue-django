@@ -38,13 +38,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'corsheaders',  # CORS
     'todos',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
+    'corsheaders.middleware.CorsMiddleware',    # CORS - commonMiddleware위에 반드시 추가
+    'django.middleware.common.CommonMiddleware',    
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -122,3 +124,10 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 AUTH_USER_MODEL = 'todos.User'
+
+# CORS
+CORS_ORIGIN_ALLOW_ALL = True # 편의상 CORS 모든 도메인에서 허용
+
+CORS_ORIGIN_WHITELIST = [
+    # 추후에 배포시 vue에서만 요청 보낼 수 있도록 정의!!
+]
