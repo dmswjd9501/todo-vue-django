@@ -2,7 +2,7 @@
   <div class="home">
     <!-- 이벤트 리스너 등록 -->
     <TodoForm @todoCreate-event="todoCreate"/> <!-- PascalCase, uppercamelcase -->
-    <!-- kebab-case -->
+    <!-- Kebab-case -->
     <TodoList :todos="todos"/>
   </div>
 </template>
@@ -19,27 +19,44 @@ export default {
     TodoList,
     TodoForm
   },
-  data() {
-    // 컴포넌트에서는 반드시 data를 함수로 작성하고, object로 리턴한다.
+  data () {
+    // 컴포넌트에서는 반드시 data를 함수로 작성하고, object를 리턴한다.
     return {
       todos: [],
     }
   },
-  methods : {
+  methods: {
     todoCreate(title) {
       console.log('==부모컴포넌트==')
-      console.log('title')
+      console.log(title)
+      // axios 요청 POST /todos/
+      const data = {
+        title: title,
+        user: 1
+      }
+      // request.POST인 경우는 반드시 FormData!
+      // const formData = new FormData()
+      // formData.append('title', title)
+      // formData.append('user',1)
+      axios.post('http://127.0.0.1:8000/api/v1/todos/', data)
+        .then(response => {
+          console.log(response)
+          this.todos.push(response.data)
+        })
+        .catch(error => {
+          console.log(error)
+        })  
     },
     getTodos() {
+      //axios 요청
       axios.get('http://127.0.0.1:8000/api/v1/todos/')
-      .then(response => {
-        console.log(response) // 만약, 오류가 발생하게 되면 ESLint 설정을 package.json
-        this.todos = response.data
-
-      })
-      .catch(error => {
-        console.log(error)
-      })
+        .then(response => {
+          console.log(response) // 만약, 오류가 발생하게 되면 ESLint 설정을 package.json을 추가!
+          this.todos = response.data
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
   },
   mounted() {
