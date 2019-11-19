@@ -20,6 +20,8 @@ export default {
         todoCreate() {
             // 부모 컴포넌트로 이벤트 발생($emit)을 통해 데이터 전달
             this.$emit('todoCreate-event', this.title)
+            this.title=''
+
         }
     }
 }
