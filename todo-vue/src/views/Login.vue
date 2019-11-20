@@ -25,6 +25,7 @@ export default {
                     const token = response.data.token
                     this.$session.start()
                     this.$session.set('jwt', token)
+                    this.$store.dispatch('login', token)
                     router.push('/') // redirect랑 동일한 역할을 한다.
                 })
                 .catch(error => {
